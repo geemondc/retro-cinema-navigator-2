@@ -1,7 +1,9 @@
 import type {Metadata} from 'next';
 import { Space_Grotesk } from 'next/font/google';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster"
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
+
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -26,8 +28,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className={`${spaceGrotesk.variable} font-body antialiased`}>
-        {children}
-        <Toaster />
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+                {children}
+            </SidebarInset>
+        </SidebarProvider>
       </body>
     </html>
   );
