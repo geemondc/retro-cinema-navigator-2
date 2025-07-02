@@ -178,7 +178,11 @@ export default function VideoController() {
                               </button>
                               <div className="flex-1">
                                 <h3 className="font-bold text-lg mb-2 flex items-center">{p.icon} {p.name}</h3>
-                                <Button onClick={() => handleLoadVideo(p.playlistUrl)}>Watch Full Playlist</Button>
+                                <Button asChild>
+                                  <a href="https://studio--retrocinema-navigator.us-central1.hosted.app/" target="_blank" rel="noopener noreferrer">
+                                    Watch Full Playlist
+                                  </a>
+                                </Button>
                               </div>
                           </div>
                       ))}
