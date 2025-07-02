@@ -34,11 +34,11 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader className="p-2 flex items-center gap-2">
         <Film className="w-8 h-8 text-accent" />
-        <div className="flex-1 group-data-[collapsible=icon]:hidden">
-          <h2 className="text-lg font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
+        <a href="https://studio--retrocinema-navigator-20-irr41.us-central1.hosted.app/" className="flex-1 group-data-[collapsible=icon]:hidden no-underline">
+          <h2 className="text-lg font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent hover:opacity-80 transition-opacity">
             External Links
           </h2>
-        </div>
+        </a>
         <SidebarTrigger className="group-data-[collapsible=icon]:hidden" />
       </SidebarHeader>
       <SidebarMenu className="flex-1 p-2">
