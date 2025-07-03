@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Home, Drama, CarFront, Youtube, ListVideo, Film } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 type Theme = 'home' | 'theater' | 'drive-in';
 
@@ -32,7 +33,7 @@ export default function VideoController() {
   const [videoType, setVideoType] = useState<'iframe' | 'video' | null>(null);
   const [theme, setTheme] = useState<Theme>('theater');
   const [videoSize, setVideoSize] = useState(80);
-  const [viewingHistory, setViewingHistory] = useState<string[]>([]);
+  const { toast } = useToast();
 
   const themeClasses: Record<Theme, string> = {
     home: 'theme-home',
@@ -74,11 +75,12 @@ export default function VideoController() {
     if (result) {
       setEmbedUrl(result.url);
       setVideoType(result.type);
-      if (!viewingHistory.includes(url)) {
-        setViewingHistory(prev => [...prev, url]);
-      }
     } else {
-      console.error('Unsupported URL', 'Please enter a valid YouTube, Vimeo, or direct video file URL.');
+      toast({
+        variant: "destructive",
+        title: "Unsupported URL",
+        description: "Please enter a valid YouTube, Vimeo, or direct video file URL.",
+      });
     }
   };
 

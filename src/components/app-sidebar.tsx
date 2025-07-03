@@ -6,7 +6,6 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-  SidebarFooter,
   SidebarTrigger
 } from '@/components/ui/sidebar';
 import {
@@ -18,7 +17,6 @@ import {
   Clapperboard,
   Film,
 } from 'lucide-react';
-import NextLink from 'next/link';
 
 const links = [
   { href: "https://ready-future-hub-life.lovable.app/", label: "Future Ready Link Hub", icon: <LinkIcon /> },

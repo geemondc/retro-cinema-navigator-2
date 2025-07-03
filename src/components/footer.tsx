@@ -1,14 +1,5 @@
 'use client'
 
-import {
-  Link as LinkIcon,
-  Stethoscope,
-  ShoppingCart,
-  Compass,
-  CalendarCheck,
-  Clapperboard,
-} from 'lucide-react';
-
 const footerLinks = [
   { href: "https://ready-future-hub-life.lovable.app/", label: "Future Ready Link Hub" },
   { href: "https://dr-gee-advice-hub.lovable.app/", label: "The Dr. Recommends" },
