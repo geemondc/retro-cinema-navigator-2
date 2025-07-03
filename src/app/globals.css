@@ -59,17 +59,17 @@
 }
 
 .theme-home {
-  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1920x1080.png');
+  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
   background-size: cover;
   background-position: center;
 }
 .theme-theater {
-  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1920x1080.png');
+  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
   background-size: cover;
   background-position: center;
 }
 .theme-drive-in {
-  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://placehold.co/1920x1080.png');
+  background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));
   background-size: cover;
   background-position: center;
 }
