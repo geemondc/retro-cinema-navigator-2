@@ -1,0 +1,21 @@
+
+{
+  "youtubeThumbnails": [
+    {
+      "id": "prequel-teaser",
+      "url": "https://i.ytimg.com/vi/slNjuRKN1-U/hqdefault.jpg",
+      "width": 640,
+      "height": 480,
+      "alt": "Prequel Teaser",
+      "hint": "movie teaser"
+    },
+    {
+      "id": "foundation-ep1",
+      "url": "https://i.ytimg.com/vi/M17P5U9NBZ4/hqdefault.jpg",
+      "width": 640,
+      "height": 480,
+      "alt": "Foundation Episode 1",
+      "hint": "sci-fi foundation"
+    }
+  ]
+}

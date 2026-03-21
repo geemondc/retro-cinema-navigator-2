@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState, type FormEvent, useMemo } from 'react';
@@ -9,21 +10,32 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Home, Drama, CarFront, Youtube, ListVideo, Film } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import placeholderData from '@/app/lib/placeholder-images.json';
 
 type Theme = 'home' | 'theater' | 'drive-in';
+
+const fullPlaylistUrl = "https://studio--retrocinema-navigator.us-central1.hosted.app/";
 
 const playlists = [
     { 
       name: "Prequels", 
-      playlistUrl: "https://www.youtube.com/playlist?list=PLd1rdbpKgWxRA8sky8S5H0W0zpSF8rEcB", 
+      playlistUrl: fullPlaylistUrl, 
       icon: <ListVideo className="h-5 w-5 mr-2" />, 
-      preview: { title: "Prequel Teaser", url: "https://www.youtube.com/watch?v=slNjuRKN1-U", thumbnail: "https://i.ytimg.com/vi/slNjuRKN1-U/hqdefault.jpg" }
+      preview: { 
+        title: "Prequel Teaser", 
+        url: "https://www.youtube.com/watch?v=slNjuRKN1-U", 
+        image: placeholderData.youtubeThumbnails[0]
+      }
     },
     { 
       name: "Foundation", 
-      playlistUrl: "https://www.youtube.com/playlist?list=PLd1rdbpKgWxTw-pfKMVrFXwpylJur6yjC", 
+      playlistUrl: fullPlaylistUrl, 
       icon: <Youtube className="h-5 w-5 mr-2" />, 
-      preview: { title: "Foundation Ep 1", url: "https://www.youtube.com/watch?v=M17P5U9NBZ4", thumbnail: "https://i.ytimg.com/vi/M17P5U9NBZ4/hqdefault.jpg" } 
+      preview: { 
+        title: "Foundation Ep 1", 
+        url: "https://www.youtube.com/watch?v=M17P5U9NBZ4", 
+        image: placeholderData.youtubeThumbnails[1]
+      } 
     },
 ];
 
@@ -64,7 +76,6 @@ export default function VideoController() {
         return { url: url, type: 'video' };
       }
     } catch (error) {
-        console.error("URL parsing error:", error);
         return null;
     }
     return null;
@@ -90,36 +101,29 @@ export default function VideoController() {
     handleLoadVideo(currentUrl);
   };
 
-  const themeHint = useMemo(() => {
-    switch(theme) {
-      case 'home': return 'home';
-      case 'theater': return 'theater';
-      case 'drive-in': return 'drive-in';
-      default: return 'theater';
-    }
-  }, [theme]);
-
   return (
-    <div className={`w-full transition-all duration-700 ${themeClasses[theme]}`} data-theme-hint={themeHint}>
-      <div className="min-h-[calc(100vh-230px)] w-full bg-black/60 backdrop-brightness-75">
-        <div className="container mx-auto px-4 py-6 sm:py-8">
+    <div className={`w-full transition-all duration-700 ${themeClasses[theme]}`} data-theme-hint={theme}>
+      <div className="min-h-[calc(100vh-230px)] w-full bg-black/40 backdrop-brightness-50">
+        <div className="container mx-auto px-4 py-8">
           <div className="w-full mx-auto transition-all duration-500" style={{ maxWidth: `${videoSize}%`}}>
-            <Card className="glass-card mb-6">
+            <Card className="glass-card mb-6 border-accent/20">
               <CardContent className="p-4">
-                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
+                <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
                   <Input
                     type="text"
                     placeholder="Paste any video URL... (YouTube, Vimeo, .mp4)"
                     value={currentUrl}
                     onChange={(e) => setCurrentUrl(e.target.value)}
-                    className="flex-grow !text-base"
+                    className="flex-grow !text-base bg-black/40 border-white/10 focus:border-accent"
                   />
-                  <Button type="submit" className="w-full sm:w-auto">Load Video</Button>
+                  <Button type="submit" className="w-full sm:w-auto bg-primary hover:bg-primary/80 text-white">
+                    Load Video
+                  </Button>
                 </form>
               </CardContent>
             </Card>
 
-            <div className="aspect-video bg-black rounded-lg shadow-2xl shadow-primary/20 overflow-hidden flex items-center justify-center border-2 border-primary/20">
+            <div className="aspect-video bg-black rounded-lg shadow-[0_0_50px_rgba(125,249,255,0.1)] overflow-hidden flex items-center justify-center border-2 border-primary/20 relative group">
               {videoType && embedUrl ? (
                 videoType === 'iframe' ? (
                   <iframe
@@ -137,51 +141,87 @@ export default function VideoController() {
                   </video>
                 )
               ) : (
-                <div className="text-center text-muted-foreground p-8">
-                  <Film className="w-16 h-16 mx-auto mb-4 text-primary/50" />
-                  <h3 className="text-xl font-semibold">Welcome to RetroCinema Navigator 2.0</h3>
-                  <p>Paste a video URL above to begin your cinematic experience.</p>
+                <div className="text-center text-muted-foreground p-8 animate-pulse">
+                  <Film className="w-20 h-20 mx-auto mb-4 text-accent/30" />
+                  <h3 className="text-2xl font-bold text-white mb-2">RetroCinema Navigator 2.0</h3>
+                  <p className="max-w-md mx-auto text-muted-foreground/80">Paste a futuristic transmission URL above to begin your cinematic journey across the stars.</p>
                 </div>
               )}
             </div>
 
-            <Card className="glass-card mt-6">
-              <CardContent className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+            <Card className="glass-card mt-6 border-accent/10">
+              <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 <div>
-                  <Label className="text-xs font-semibold uppercase tracking-wider mb-2 block">Theme</Label>
-                  <div className="flex gap-2">
-                    <Button variant={theme === 'home' ? 'default' : 'secondary'} onClick={() => setTheme('home')}><Home /> <span className="hidden sm:inline ml-2">Home</span></Button>
-                    <Button variant={theme === 'theater' ? 'default' : 'secondary'} onClick={() => setTheme('theater')}><Drama /> <span className="hidden sm:inline ml-2">Theater</span></Button>
-                    <Button variant={theme === 'drive-in' ? 'default' : 'secondary'} onClick={() => setTheme('drive-in')}><CarFront /> <span className="hidden sm:inline ml-2">Drive-In</span></Button>
+                  <Label className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4 block">Viewing Environment</Label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button 
+                      variant={theme === 'home' ? 'default' : 'secondary'} 
+                      onClick={() => setTheme('home')}
+                      className={`flex-1 sm:flex-none ${theme === 'home' ? 'bg-primary shadow-[0_0_15px_rgba(102,51,153,0.5)]' : ''}`}
+                    >
+                      <Home className="h-4 w-4 mr-2" /> Home
+                    </Button>
+                    <Button 
+                      variant={theme === 'theater' ? 'default' : 'secondary'} 
+                      onClick={() => setTheme('theater')}
+                      className={`flex-1 sm:flex-none ${theme === 'theater' ? 'bg-primary shadow-[0_0_15px_rgba(102,51,153,0.5)]' : ''}`}
+                    >
+                      <Drama className="h-4 w-4 mr-2" /> Theater
+                    </Button>
+                    <Button 
+                      variant={theme === 'drive-in' ? 'default' : 'secondary'} 
+                      onClick={() => setTheme('drive-in')}
+                      className={`flex-1 sm:flex-none ${theme === 'drive-in' ? 'bg-primary shadow-[0_0_15px_rgba(102,51,153,0.5)]' : ''}`}
+                    >
+                      <CarFront className="h-4 w-4 mr-2" /> Drive-In
+                    </Button>
                   </div>
                 </div>
                 <div className="w-full">
-                  <Label htmlFor="video-size" className="text-xs font-semibold uppercase tracking-wider mb-2 block">Screen Size</Label>
-                  <Slider id="video-size" value={[videoSize]} onValueChange={(val) => setVideoSize(val[0])} min={40} max={100} step={5} />
+                  <Label htmlFor="video-size" className="text-xs font-bold uppercase tracking-[0.2em] text-accent mb-4 block">Screen Scale</Label>
+                  <Slider 
+                    id="video-size" 
+                    value={[videoSize]} 
+                    onValueChange={(val) => setVideoSize(val[0])} 
+                    min={40} 
+                    max={100} 
+                    step={5}
+                    className="cursor-pointer"
+                  />
                 </div>
               </CardContent>
             </Card>
           </div>
           
-          <div className="mt-10 max-w-2xl mx-auto">
-              <Card className="glass-card">
+          <div className="mt-12 max-w-2xl mx-auto">
+              <Card className="glass-card border-white/5 bg-black/40">
                   <CardHeader>
-                      <CardTitle>Curated Playlists</CardTitle>
-                      <CardDescription>Start with our hand-picked video collections.</CardDescription>
+                      <CardTitle className="text-accent">Curated Playlists</CardTitle>
+                      <CardDescription>Select a collection to preload into the cinema.</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
                       {playlists.map(p => (
-                          <div key={p.name} className="flex gap-4 items-center">
-                              <button onClick={() => handleLoadVideo(p.preview.url)} className="text-left rounded-md overflow-hidden group relative w-32 shrink-0">
-                                  <Image src={p.preview.thumbnail} alt={p.preview.title} width={128} height={72} className="w-full object-cover transition-transform duration-300 group-hover:scale-110" data-ai-hint="video thumbnail"/>
-                                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-1">
-                                      <p className="text-white text-xs text-center">{p.preview.title}</p>
+                          <div key={p.name} className="flex gap-4 items-center p-3 rounded-lg hover:bg-white/5 transition-colors border border-transparent hover:border-white/10">
+                              <button onClick={() => handleLoadVideo(p.preview.url)} className="text-left rounded-md overflow-hidden group relative w-32 shrink-0 border border-white/10 shadow-lg">
+                                  <Image 
+                                    src={p.preview.image.url} 
+                                    alt={p.preview.image.alt} 
+                                    width={p.preview.image.width} 
+                                    height={p.preview.image.height} 
+                                    className="w-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                                    data-ai-hint={p.preview.image.hint}
+                                  />
+                                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-1">
+                                      <p className="text-white text-xs font-bold text-center">PREVIEW</p>
                                   </div>
                               </button>
-                              <div className="flex-1">
-                                <h3 className="font-bold text-lg mb-2 flex items-center">{p.icon} {p.name}</h3>
-                                <Button asChild>
-                                  <a href="https://studio--retrocinema-navigator.us-central1.hosted.app/" target="_blank" rel="noopener noreferrer">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-bold text-lg mb-2 flex items-center truncate text-white">
+                                  <span className="text-accent shrink-0">{p.icon}</span> 
+                                  <span className="ml-2 truncate">{p.name}</span>
+                                </h3>
+                                <Button asChild variant="outline" size="sm" className="border-accent/30 hover:border-accent hover:bg-accent/10">
+                                  <a href={p.playlistUrl} target="_blank" rel="noopener noreferrer">
                                     Watch Full Playlist
                                   </a>
                                 </Button>
@@ -191,7 +231,6 @@ export default function VideoController() {
                   </CardContent>
               </Card>
           </div>
-
         </div>
       </div>
     </div>
