@@ -1,0 +1,7 @@
+# RetroCinema Future Ready Playlist
+
+> A retro cinema-styled browser for the full Future Ready video series by Dr. Gee — 36 Prequel episodes and 21 Foundation episodes on mindset, wellness, and building a life on your own terms.
+
+## Pages
+
+- [Home](/): Browse, search, and filter all 57 Future Ready videos with Theater and Drive-In viewing modes.
